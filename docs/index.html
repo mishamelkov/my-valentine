@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-image: url('romantic-background.jpg');
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb); /* Красивый градиент */
             background-size: cover;
             background-position: center;
             text-align: center;
@@ -66,25 +66,27 @@
         }
 
         .envelope {
-            width: 200px;
-            height: 120px;
+            width: 400px; /* Увеличиваем ширину */
+            height: 240px; /* Увеличиваем высоту */
             background-color: #ff4d4d;
             position: relative;
             cursor: pointer;
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Тень для конверта */
+            border-radius: 10px; /* Скруглённые углы */
         }
         .envelope::before {
             content: '';
             position: absolute;
-            top: -60px;
+            top: -120px; /* Увеличиваем отступ сверху */
             left: 0;
             width: 0;
             height: 0;
-            border-left: 100px solid transparent;
-            border-right: 100px solid transparent;
-            border-bottom: 60px solid #ff4d4d;
+            border-left: 200px solid transparent; /* Увеличиваем размер треугольника */
+            border-right: 200px solid transparent; /* Увеличиваем размер треугольника */
+            border-bottom: 120px solid #ff4d4d; /* Увеличиваем размер треугольника */
+            transition: transform 0.3s ease;
         }
-
         .envelope::after {
             content: '';
             position: absolute;
@@ -94,6 +96,7 @@
             height: 100%;
             background-color: #ff4d4d;
             clip-path: polygon(0 0, 100% 0, 50% 50%);
+            border-radius: 10px; /* Скруглённые углы */
         }
         .envelope-text {
             position: absolute;
@@ -101,8 +104,35 @@
             left: 50%;
             transform: translate(-50%, -50%);
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.5em;
+            font-size: 2.5em; /* Увеличиваем размер текста */
             color: white;
+            transition: transform 0.3s ease;
+            z-index: 10; /* Убедимся, что текст поверх конверта */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тень для текста */
+            animation: float 3s ease-in-out infinite; /* Анимация плавания */
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(-50%, -50%) translateY(0);
+            }
+            50% {
+                transform: translate(-50%, -50%) translateY(-10px); /* Поднимаем текст */
+            }
+        }
+
+        /* Анимация при наведении */
+        .envelope:hover {
+            transform: scale(1.05); /* Увеличиваем конверт при наведении */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Увеличиваем тень */
+        }
+
+        .envelope:hover::before {
+            transform: translateY(-10px); /* Поднимаем верхнюю часть конверта */
+        }
+
+        .envelope:hover .envelope-text {
+            transform: translate(-50%, -50%) scale(1.1); /* Увеличиваем текст */
         }
 
         /* Анимация открытия конверта */
@@ -118,6 +148,29 @@
             padding: 50px;
         }
 
+        /* Блок с поздравлениями */
+        #congratulations {
+            display: none;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #congratulations h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3em;
+            color: #ff4d4d;
+        }
+        #congratulations .message {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2em;
+            color: #333;
+            margin-top: 20px;
+        }
+        #congratulations img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -127,15 +180,25 @@
         </div>
     </div>
     <div id="main-content">
-    <h1>Will you be my valentine?</h1>
-    <button id="yesButton" onclick="showHappyMessage()">Yes</button>
-    <button id="noButton" onmouseover="moveNoButton()">No</button>
-    <div id="hiddenMessage" class="message"></div>
-</div>
+        <h1>Will you be my valentine?</h1>
+        <button id="yesButton" onclick="showCongratulations()">Yes</button>
+        <button id="noButton" onmouseover="moveNoButton()">No</button>
+        <div id="hiddenMessage" class="message"></div>
+    </div>
+
+    <!-- Блок с поздравлениями -->
+    <div id="congratulations">
+        <h1>Поздравляю! 💖</h1>
+        <div class="message">Ты сделала мой день! Спасибо, что ты есть!</div>
+        <img src="images/final.gif" alt="Поздравление">
+    </div>
     
     <script>
-         // Функция для открытия конверта
-         function openEnvelope() {
+        // Переменная для хранения идентификатора интервала
+        let fallingImagesInterval;
+
+        // Функция для открытия конверта
+        function openEnvelope() {
             const envelope = document.querySelector('.envelope');
             const envelopeScreen = document.getElementById('envelope-screen');
             const mainContent = document.getElementById('main-content');
@@ -149,13 +212,56 @@
                 mainContent.style.display = 'block';
             }, 500);
         }
-        const images = ['teh.png', 'tehh.png', 'drako.png','zxs.jpg','s.jpg','gxd.jpg','ttt.jpg']; // Список картинок
 
-        function showHappyMessage() {
-            document.getElementById('hiddenMessage').innerHTML = "Ура! Ты сделала мой день! 💖";
-            document.getElementById('hiddenMessage').style.display = 'block';
-            document.getElementById('yesButton').style.display = 'none';
-            document.getElementById('noButton').style.display = 'none';
+        const images = ['teh.png', 'tehh.png', 'drako.png', 'zxs.jpg', 's.jpg', 'gxd.jpg', 'ttt.jpg']; // Список картинок
+        const activeImages = []; // Массив для хранения активных картинок
+
+        function getRandomImage() {
+            let availableImages = images.filter(img => !activeImages.includes(img)); // Фильтруем картинки, которые ещё не активны
+            if (availableImages.length === 0) {
+                availableImages = images; // Если все картинки уже активны, сбрасываем список
+                activeImages.length = 0; // Очищаем массив активных картинок
+            }
+            const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)]; // Выбираем случайную картинку
+            activeImages.push(randomImage); // Добавляем её в активные
+            return randomImage;
+        }
+
+        function createFallingImages() {
+            fallingImagesInterval = setInterval(() => {
+                const img = document.createElement('img');
+                img.classList.add('falling-image');
+                img.src = 'images/' + getRandomImage(); // Используем функцию для выбора уникальной картинки
+                img.style.left = Math.random() * 100 + 'vw';
+                img.style.width = Math.random() * 50 + 100 + 'px'; 
+                img.style.animationDuration = Math.random() * 15 + 5 + 's';
+                document.body.appendChild(img);
+
+                // Удаляем картинку после завершения анимации
+                setTimeout(() => {
+                    img.remove();
+                    const index = activeImages.indexOf(img.src.split('/').pop()); // Удаляем картинку из активных
+                    if (index !== -1) {
+                        activeImages.splice(index, 1);
+                    }
+                }, 20000);
+            }, 1000);
+        }
+
+        createFallingImages();
+
+        function showCongratulations() {
+            // Останавливаем интервал создания падающих картинок
+            clearInterval(fallingImagesInterval);
+
+            // Удаляем все текущие падающие картинки
+            const fallingImages = document.querySelectorAll('.falling-image');
+            fallingImages.forEach(img => img.remove());
+
+            // Скрываем основной контент
+            document.getElementById('main-content').style.display = 'none';
+            // Показываем блок с поздравлениями
+            document.getElementById('congratulations').style.display = 'block';
         }
 
         function moveNoButton() {
@@ -166,21 +272,6 @@
             noButton.style.left = x + 'px';
             noButton.style.top = y + 'px';
         }
-
-        function createFallingImages() {
-            setInterval(() => {
-                const img = document.createElement('img');
-                img.classList.add('falling-image');
-                img.src = 'images/' + images[Math.floor(Math.random() * images.length)]; // Случайная картинка
-                img.style.left = Math.random() * 100 + 'vw';
-                img.style.width = Math.random() * 50 + 100 + 'px'; 
-                img.style.animationDuration = Math.random() * 15 + 5 + 's';
-                document.body.appendChild(img);
-                setTimeout(() => img.remove(), 20000);
-            }, 1000);
-        }
-
-        createFallingImages();
     </script>
 </body>
 </html>
