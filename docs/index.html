@@ -8,12 +8,14 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb); /* Красивый градиент */
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #ff9a9e); /* Плавный градиент */
             background-size: cover;
             background-position: center;
             text-align: center;
             padding: 50px;
             overflow: hidden;
+            height: 100vh; /* Растягиваем градиент на всю высоту экрана */
+            margin: 0; /* Убираем отступы по умолчанию */
         }
         h1 {
             font-family: 'Montserrat', sans-serif;
@@ -60,33 +62,43 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: auto; /* Убираем фиксированную высоту */
             background-color: rgba(255, 255, 255, 0.9);
             position: relative;
+            padding: 60px; /* Увеличиваем отступы */
+            border-radius: 20px; /* Закругляем углы */
+            max-width: 600px; /* Увеличиваем ширину */
+            margin: 0 auto; /* Центрируем по горизонтали */
+            margin-top: 100px; /* Отступ сверху */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Тень для фона */
         }
 
         .envelope {
-            width: 400px; /* Увеличиваем ширину */
-            height: 240px; /* Увеличиваем высоту */
-            background-color: #ff4d4d;
+            width: 300px; /* Ширина конверта */
+            height: 200px; /* Высота конверта */
+            background-color: #f5deb3; /* Бежевый цвет конверта */
             position: relative;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Тень для конверта */
-            border-radius: 10px; /* Скруглённые углы */
+            border-radius: 0 0 10px 10px; /* Закруглённые углы только внизу */
         }
+
+        /* Верхняя часть конверта (крышка) */
         .envelope::before {
             content: '';
             position: absolute;
-            top: -120px; /* Увеличиваем отступ сверху */
+            top: -100px; /* Высота крышки */
             left: 0;
             width: 0;
             height: 0;
-            border-left: 200px solid transparent; /* Увеличиваем размер треугольника */
-            border-right: 200px solid transparent; /* Увеличиваем размер треугольника */
-            border-bottom: 120px solid #ff4d4d; /* Увеличиваем размер треугольника */
+            border-left: 150px solid transparent; /* Левая часть крышки */
+            border-right: 150px solid transparent; /* Правая часть крышки */
+            border-bottom: 100px solid #d2b48c; /* Светло-коричневая крышка */
             transition: transform 0.3s ease;
         }
+
+        /* Нижняя часть конверта */
         .envelope::after {
             content: '';
             position: absolute;
@@ -94,10 +106,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #ff4d4d;
-            clip-path: polygon(0 0, 100% 0, 50% 50%);
-            border-radius: 10px; /* Скруглённые углы */
+            background-color: #f5deb3; /* Бежевый цвет конверта */
+            border-radius: 0 0 10px 10px; /* Закруглённые углы только внизу */
         }
+
+        /* Текст внутри конверта */
         .envelope-text {
             position: absolute;
             top: 50%;
@@ -128,7 +141,7 @@
         }
 
         .envelope:hover::before {
-            transform: translateY(-10px); /* Поднимаем верхнюю часть конверта */
+            transform: translateY(-20px) rotate(-10deg); /* Поднимаем и наклоняем крышку */
         }
 
         .envelope:hover .envelope-text {
@@ -174,6 +187,12 @@
     </style>
 </head>
 <body>
+    <!-- Аудио -->
+    <audio id="background-music" autoplay muted loop>
+        <source src="audio/lan.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
+    </audio>
+
     <div id="envelope-screen">
         <div class="envelope" onclick="openEnvelope()">
             <div class="envelope-text">For Naya</div>
@@ -210,6 +229,7 @@
             setTimeout(() => {
                 envelopeScreen.style.display = 'none';
                 mainContent.style.display = 'block';
+                createFallingImages(); // Запускаем падающие картинки после открытия конверта
             }, 500);
         }
 
@@ -248,8 +268,6 @@
             }, 1000);
         }
 
-        createFallingImages();
-
         function showCongratulations() {
             // Останавливаем интервал создания падающих картинок
             clearInterval(fallingImagesInterval);
@@ -272,6 +290,12 @@
             noButton.style.left = x + 'px';
             noButton.style.top = y + 'px';
         }
+
+        // Включаем звук после загрузки страницы
+        const music = document.getElementById('background-music');
+        window.addEventListener('load', () => {
+            music.muted = false; // Включаем звук
+        });
     </script>
 </body>
 </html>
