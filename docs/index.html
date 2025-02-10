@@ -166,6 +166,18 @@
             border-radius: 5px;
         }
 
+        /* Стили для гифки под конвертом */
+        #gif-container {
+            margin-top: 30px; /* Отступ от конверта */
+            text-align: center;
+        }
+        #gif-container img {
+            max-width: 200px; /* Уменьшаем размер гифки */
+            height: auto;
+            border-radius: 10px;
+            transition: opacity 0.5s ease; /* Плавное исчезновение */
+        }
+
         /* Медиа-запросы для мобильных устройств */
         @media (max-width: 600px) {
             h1 {
@@ -194,6 +206,9 @@
             #congratulations .message {
                 font-size: 1.2em;
             }
+            #gif-container img {
+                max-width: 150px; /* Ещё меньше на мобильных устройствах */
+            }
         }
     </style>
 </head>
@@ -209,6 +224,12 @@
             <div class="envelope-text">For Naya</div>
         </div>
     </div>
+
+    <!-- Гифка под конвертом -->
+    <div id="gif-container">
+        <img src="images/giphy.GIF" alt="Сердце">
+    </div>
+
     <div id="main-content">
         <h1>Will you be my valentine?</h1>
         <button id="yesButton" onclick="showCongratulations()">Yes</button>
@@ -230,9 +251,15 @@
             const envelope = document.querySelector('.envelope');
             const envelopeScreen = document.getElementById('envelope-screen');
             const mainContent = document.getElementById('main-content');
+            const gifContainer = document.getElementById('gif-container');
 
+            // Анимация открытия конверта
             envelope.classList.add('open');
 
+            // Плавное исчезновение гифки
+            gifContainer.style.opacity = '0';
+
+            // Через 0.5 секунды скрываем начальный экран и показываем основной контент
             setTimeout(() => {
                 envelopeScreen.style.display = 'none';
                 mainContent.style.display = 'block';
