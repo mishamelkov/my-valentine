@@ -8,18 +8,18 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #ff9a9e); /* Плавный градиент */
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #ff9a9e);
             background-size: cover;
             background-position: center;
             text-align: center;
-            padding: 50px;
+            padding: 20px;
             overflow: hidden;
-            height: 100vh; /* Растягиваем градиент на всю высоту экрана */
-            margin: 0; /* Убираем отступы по умолчанию */
+            height: 100vh;
+            margin: 0;
         }
         h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 4em;
+            font-size: 2.5em;
             color: #ff4d4d;
             margin-bottom: 20px;
         }
@@ -27,8 +27,8 @@
             background-color: #fc4dff;
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.2em;
+            padding: 10px 20px;
+            font-size: 1em;
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s;
@@ -40,7 +40,7 @@
         .message {
             display: none;
             font-family: 'Montserrat', sans-serif;
-            font-size: 2em;
+            font-size: 1.5em;
             color: #333;
             margin-top: 20px;
             animation: fadeIn 2s;
@@ -51,54 +51,48 @@
         }
         .falling-image {
             position: absolute;
-            width: 50px; /* Размер картинки */
+            width: 30px;
             animation: fall linear infinite;
         }
         @keyframes fall {
             to { transform: translateY(100vh); }
         }
-         /* Начальный экран с конвертом */
-         #envelope-screen {
+        #envelope-screen {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: auto; /* Убираем фиксированную высоту */
+            height: auto;
             background-color: rgba(255, 255, 255, 0.9);
             position: relative;
-            padding: 60px; /* Увеличиваем отступы */
-            border-radius: 20px; /* Закругляем углы */
-            max-width: 600px; /* Увеличиваем ширину */
-            margin: 0 auto; /* Центрируем по горизонтали */
-            margin-top: 100px; /* Отступ сверху */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Тень для фона */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            margin: 0 auto;
+            margin-top: 50px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
-
         .envelope {
-            width: 300px; /* Ширина конверта */
-            height: 200px; /* Высота конверта */
-            background-color: #f5deb3; /* Бежевый цвет конверта */
+            width: 150px;
+            height: 100px;
+            background-color: #f5deb3;
             position: relative;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Тень для конверта */
-            border-radius: 0 0 10px 10px; /* Закруглённые углы только внизу */
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 5px 5px;
         }
-
-        /* Верхняя часть конверта (крышка) */
         .envelope::before {
             content: '';
             position: absolute;
-            top: -100px; /* Высота крышки */
+            top: -50px;
             left: 0;
             width: 0;
             height: 0;
-            border-left: 150px solid transparent; /* Левая часть крышки */
-            border-right: 150px solid transparent; /* Правая часть крышки */
-            border-bottom: 100px solid #d2b48c; /* Светло-коричневая крышка */
+            border-left: 75px solid transparent;
+            border-right: 75px solid transparent;
+            border-bottom: 50px solid #d2b48c;
             transition: transform 0.3s ease;
         }
-
-        /* Нижняя часть конверта */
         .envelope::after {
             content: '';
             position: absolute;
@@ -106,83 +100,100 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #f5deb3; /* Бежевый цвет конверта */
-            border-radius: 0 0 10px 10px; /* Закруглённые углы только внизу */
+            background-color: #f5deb3;
+            border-radius: 0 0 5px 5px;
         }
-
-        /* Текст внутри конверта */
         .envelope-text {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-family: 'Montserrat', sans-serif;
-            font-size: 2.5em; /* Увеличиваем размер текста */
+            font-size: 1.5em;
             color: white;
             transition: transform 0.3s ease;
-            z-index: 10; /* Убедимся, что текст поверх конверта */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тень для текста */
-            animation: float 3s ease-in-out infinite; /* Анимация плавания */
+            z-index: 10;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            animation: float 3s ease-in-out infinite;
         }
-
         @keyframes float {
             0%, 100% {
                 transform: translate(-50%, -50%) translateY(0);
             }
             50% {
-                transform: translate(-50%, -50%) translateY(-10px); /* Поднимаем текст */
+                transform: translate(-50%, -50%) translateY(-5px);
             }
         }
-
-        /* Анимация при наведении */
         .envelope:hover {
-            transform: scale(1.05); /* Увеличиваем конверт при наведении */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Увеличиваем тень */
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
-
         .envelope:hover::before {
-            transform: translateY(-20px) rotate(-10deg); /* Поднимаем и наклоняем крышку */
+            transform: translateY(-10px) rotate(-10deg);
         }
-
         .envelope:hover .envelope-text {
-            transform: translate(-50%, -50%) scale(1.1); /* Увеличиваем текст */
+            transform: translate(-50%, -50%) scale(1.1);
         }
-
-        /* Анимация открытия конверта */
         .envelope.open {
             transform: scale(1.5) rotate(10deg);
             opacity: 0;
             transition: transform 0.5s ease, opacity 0.5s ease;
         }
-
-        /* Основной контент (скрыт до открытия конверта) */
         #main-content {
             display: none;
-            padding: 50px;
+            padding: 20px;
         }
-
-        /* Блок с поздравлениями */
         #congratulations {
             display: none;
             text-align: center;
-            margin-top: 50px;
+            margin-top: 20px;
         }
         #congratulations h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 3em;
+            font-size: 2em;
             color: #ff4d4d;
         }
         #congratulations .message {
             font-family: 'Montserrat', sans-serif;
-            font-size: 2em;
+            font-size: 1.5em;
             color: #333;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         #congratulations img {
             max-width: 100%;
             height: auto;
-            margin-top: 20px;
-            border-radius: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        /* Медиа-запросы для мобильных устройств */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            button {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+            .envelope {
+                width: 120px;
+                height: 80px;
+            }
+            .envelope::before {
+                top: -40px;
+                border-left: 60px solid transparent;
+                border-right: 60px solid transparent;
+                border-bottom: 40px solid #d2b48c;
+            }
+            .envelope-text {
+                font-size: 1.2em;
+            }
+            #congratulations h1 {
+                font-size: 1.5em;
+            }
+            #congratulations .message {
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
@@ -213,37 +224,33 @@
     </div>
     
     <script>
-        // Переменная для хранения идентификатора интервала
         let fallingImagesInterval;
 
-        // Функция для открытия конверта
         function openEnvelope() {
             const envelope = document.querySelector('.envelope');
             const envelopeScreen = document.getElementById('envelope-screen');
             const mainContent = document.getElementById('main-content');
 
-            // Анимация открытия конверта
             envelope.classList.add('open');
 
-            // Через 0.5 секунды скрываем начальный экран и показываем основной контент
             setTimeout(() => {
                 envelopeScreen.style.display = 'none';
                 mainContent.style.display = 'block';
-                createFallingImages(); // Запускаем падающие картинки после открытия конверта
+                createFallingImages();
             }, 500);
         }
 
-        const images = ['teh.png', 'tehh.png', 'drako.png', 'zxs.jpg', 's.jpg', 'gxd.jpg', 'ttt.jpg']; // Список картинок
-        const activeImages = []; // Массив для хранения активных картинок
+        const images = ['teh.png', 'tehh.png', 'drako.png', 'zxs.jpg', 's.jpg', 'gxd.jpg', 'ttt.jpg'];
+        const activeImages = [];
 
         function getRandomImage() {
-            let availableImages = images.filter(img => !activeImages.includes(img)); // Фильтруем картинки, которые ещё не активны
+            let availableImages = images.filter(img => !activeImages.includes(img));
             if (availableImages.length === 0) {
-                availableImages = images; // Если все картинки уже активны, сбрасываем список
-                activeImages.length = 0; // Очищаем массив активных картинок
+                availableImages = images;
+                activeImages.length = 0;
             }
-            const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)]; // Выбираем случайную картинку
-            activeImages.push(randomImage); // Добавляем её в активные
+            const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
+            activeImages.push(randomImage);
             return randomImage;
         }
 
@@ -251,34 +258,27 @@
             fallingImagesInterval = setInterval(() => {
                 const img = document.createElement('img');
                 img.classList.add('falling-image');
-                img.src = 'images/' + getRandomImage(); // Используем функцию для выбора уникальной картинки
+                img.src = 'images/' + getRandomImage();
                 img.style.left = Math.random() * 100 + 'vw';
-                img.style.width = Math.random() * 50 + 100 + 'px'; 
-                img.style.animationDuration = Math.random() * 15 + 5 + 's';
+                img.style.width = Math.random() * 30 + 50 + 'px';
+                img.style.animationDuration = Math.random() * 10 + 5 + 's';
                 document.body.appendChild(img);
 
-                // Удаляем картинку после завершения анимации
                 setTimeout(() => {
                     img.remove();
-                    const index = activeImages.indexOf(img.src.split('/').pop()); // Удаляем картинку из активных
+                    const index = activeImages.indexOf(img.src.split('/').pop());
                     if (index !== -1) {
                         activeImages.splice(index, 1);
                     }
-                }, 20000);
+                }, 15000);
             }, 1000);
         }
 
         function showCongratulations() {
-            // Останавливаем интервал создания падающих картинок
             clearInterval(fallingImagesInterval);
-
-            // Удаляем все текущие падающие картинки
             const fallingImages = document.querySelectorAll('.falling-image');
             fallingImages.forEach(img => img.remove());
-
-            // Скрываем основной контент
             document.getElementById('main-content').style.display = 'none';
-            // Показываем блок с поздравлениями
             document.getElementById('congratulations').style.display = 'block';
         }
 
@@ -291,10 +291,9 @@
             noButton.style.top = y + 'px';
         }
 
-        // Включаем звук после загрузки страницы
         const music = document.getElementById('background-music');
         window.addEventListener('load', () => {
-            music.muted = false; // Включаем звук
+            music.muted = false;
         });
     </script>
 </body>
