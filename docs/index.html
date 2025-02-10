@@ -59,6 +59,7 @@
         }
         #envelope-screen {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: auto;
@@ -170,9 +171,10 @@
         #gif-container {
             margin-top: 30px; /* Отступ от конверта */
             text-align: center;
+            width: 100%; /* Ширина контейнера равна ширине белого фона */
         }
         #gif-container img {
-            max-width: 200px; /* Уменьшаем размер гифки */
+            max-width: 200px; /* Размер гифки на десктопах */
             height: auto;
             border-radius: 10px;
             transition: opacity 0.5s ease; /* Плавное исчезновение */
@@ -206,8 +208,10 @@
             #congratulations .message {
                 font-size: 1.2em;
             }
+            /* Гифка на всю ширину белого фона */
             #gif-container img {
-                mmax-width: 80%; /* Ещё меньше на мобильных устройствах */
+                max-width: 100%; /* Гифка занимает всю ширину контейнера */
+                border-radius: 10px; /* Закругление углов */
             }
         }
     </style>
@@ -223,11 +227,10 @@
         <div class="envelope" onclick="openEnvelope()">
             <div class="envelope-text">For Naya</div>
         </div>
-    </div>
-
-    <!-- Гифка под конвертом -->
-    <div id="gif-container">
-        <img src="images/giphy.GIF" alt="Сердце">
+        <!-- Гифка под конвертом -->
+        <div id="gif-container">
+            <img src="images/giphy.GIF" alt="Сердце">
+        </div>
     </div>
 
     <div id="main-content">
